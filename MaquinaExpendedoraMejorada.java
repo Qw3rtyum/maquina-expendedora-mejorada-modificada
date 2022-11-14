@@ -25,6 +25,18 @@ public class MaquinaExpendedoraMejorada {
     }
 
     /**
+     * Crea una maquina expendedora con el precio,
+     * origen y destino ya especificados.
+     */
+    public MaquinaExpendedoraMejorada() {
+        precioBillete = 50;
+        balanceClienteActual = 0;
+        totalDineroAcumulado = 0;
+        estacionOrigen = "León";
+        estacionDestino = "Madrid";
+    }
+    
+    /**
      * Devuelve el precio del billete
      */
     public int getPrecioBillete() {
