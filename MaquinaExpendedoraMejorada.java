@@ -103,9 +103,16 @@ public class MaquinaExpendedoraMejorada {
      * (Incluyendo los dos depósitos)
      */
     public int vaciarDineroDeLaMaquina() {
-        int totalAVaciar = balanceClienteActual + totalDineroAcumulado;
-        balanceClienteActual = 0;
-        totalDineroAcumulado = 0;
+        int totalAVaciar = totalDineroAcumulado;
+        if (balanceClienteActual == 0) {
+            totalDineroAcumulado = 0;
+        }
+        else {
+            totalAVaciar = -1;
+            System.out.println("Error: Imposible vaciar la");
+            System.out.println("máquina mientras hay una");
+            System.out.println("operación en curso");
+        }
         return totalAVaciar;
     }
 }
