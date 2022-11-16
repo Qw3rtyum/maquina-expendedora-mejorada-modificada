@@ -12,32 +12,36 @@ public class MaquinaExpendedoraMejorada {
     private String estacionDestino;
     // El número de billetes vendidos
     private int billetesVendidos;
+    // El tipo de Máquina expendedora
+    private boolean maquinaEspecial;
 
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean esEspecial) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
         estacionDestino = destino;
         billetesVendidos = 0;
+        maquinaEspecial = esEspecial;
     }
 
     /**
      * Crea una maquina expendedora con el precio,
      * origen y destino ya especificados.
      */
-    public MaquinaExpendedoraMejorada() {
+    public MaquinaExpendedoraMejorada(boolean esEspecial) {
         precioBillete = 50;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = "León";
         estacionDestino = "Madrid";
         billetesVendidos = 0;
+        maquinaEspecial = esEspecial;
     }
     
     /**
@@ -77,8 +81,17 @@ public class MaquinaExpendedoraMejorada {
             System.out.println("# Billete de tren:");
             System.out.println("# De " + estacionOrigen + " a " + estacionDestino);
             System.out.println("# " + precioBillete + " euros.");
+            if (maquinaEspecial == true) {
+                int descuento = precioBillete / 4;
+                System.out.println("# !!!ENHORABUENA!!!");
+                System.out.println("# Usted ha ganado un decuento");
+                System.out.println("# de " + (descuento) + " euros para");
+                System.out.println("# compras en McNollos");
+            }
+            else {
+            }
             System.out.println("##################");
-            System.out.println();         
+            System.out.println();
     
             // Actualiza el total de dinero acumulado en la maquina
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
