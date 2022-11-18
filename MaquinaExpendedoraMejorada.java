@@ -14,13 +14,15 @@ public class MaquinaExpendedoraMejorada {
     private int billetesVendidos;
     // El tipo de Máquina expendedora
     private boolean maquinaEspecial;
+    // El número de billetes de la máquina
+    private int numeroBilletes;
 
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean esEspecial) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean esEspecial, int billetesTotal) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
@@ -28,13 +30,14 @@ public class MaquinaExpendedoraMejorada {
         estacionDestino = destino;
         billetesVendidos = 0;
         maquinaEspecial = esEspecial;
+        numeroBilletes = billetesTotal;
     }
 
     /**
      * Crea una maquina expendedora con el precio,
      * origen y destino ya especificados.
      */
-    public MaquinaExpendedoraMejorada(boolean esEspecial) {
+    public MaquinaExpendedoraMejorada(boolean esEspecial, int billetesTotal) {
         precioBillete = 50;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
@@ -42,6 +45,7 @@ public class MaquinaExpendedoraMejorada {
         estacionDestino = "Madrid";
         billetesVendidos = 0;
         maquinaEspecial = esEspecial;
+        numeroBilletes = billetesTotal;
     }
     
     /**
@@ -62,47 +66,62 @@ public class MaquinaExpendedoraMejorada {
      * Simula la introduccion de dinero por parte del cliente actual
      */
     public void introducirDinero(int cantidadIntroducida) {
-        if (cantidadIntroducida > 0) {
-            balanceClienteActual = balanceClienteActual + cantidadIntroducida;
+        if (numeroBilletes > 0) {
+            if (cantidadIntroducida > 0) {
+                balanceClienteActual = balanceClienteActual + cantidadIntroducida;
+            }
+            else {
+                System.out.println(cantidadIntroducida + " no es una cantidad de dinero valida.");
+            }        
         }
         else {
-            System.out.println(cantidadIntroducida + " no es una cantidad de dinero valida.");
-        }        
+            System.out.println("Error: No es posible introducir");
+            System.out.println("dinero debido a que la máquina");
+            System.out.println("se ha quedado sin billetes");
+        }
     }
 
     /**
      * Imprime un billete para el cliente actual
      */
     public void imprimirBillete() {
-        int cantidadDeDineroQueFalta = precioBillete - balanceClienteActual;
-        if (cantidadDeDineroQueFalta <= 0) {        
-            // Simula la impresion de un billete
-            System.out.println("##################");
-            System.out.println("# Billete de tren:");
-            System.out.println("# De " + estacionOrigen + " a " + estacionDestino);
-            System.out.println("# " + precioBillete + " euros.");
-            if (maquinaEspecial == true) {
-                int descuento = precioBillete / 4;
-                System.out.println("# !!!ENHORABUENA!!!");
-                System.out.println("# Usted ha ganado un decuento");
-                System.out.println("# de " + (descuento) + " euros para");
-                System.out.println("# compras en McNollos");
+        if (numeroBilletes > 0) {
+            numeroBilletes = numeroBilletes - 1;
+            int cantidadDeDineroQueFalta = precioBillete - balanceClienteActual;
+            if (cantidadDeDineroQueFalta <= 0) {        
+                // Simula la impresion de un billete
+                System.out.println("##################");
+                System.out.println("# Billete de tren:");
+                System.out.println("# De " + estacionOrigen + " a " + estacionDestino);
+                System.out.println("# " + precioBillete + " euros.");
+                if (maquinaEspecial == true) {
+                    int descuento = precioBillete / 4;
+                    System.out.println("# !!!ENHORABUENA!!!");
+                    System.out.println("# Usted ha ganado un decuento");
+                    System.out.println("# de " + (descuento) + " euros para");
+                    System.out.println("# compras en McNollos");
+                }
+                else {
+                }
+                System.out.println("##################");
+                System.out.println();
+    
+                // Actualiza el total de dinero acumulado en la maquina
+                totalDineroAcumulado = totalDineroAcumulado + precioBillete;
+                // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
+                balanceClienteActual = balanceClienteActual - precioBillete;
+                billetesVendidos = billetesVendidos + 1;
             }
             else {
-            }
-            System.out.println("##################");
-            System.out.println();
-    
-            // Actualiza el total de dinero acumulado en la maquina
-            totalDineroAcumulado = totalDineroAcumulado + precioBillete;
-            // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
-            balanceClienteActual = balanceClienteActual - precioBillete;
-            billetesVendidos = billetesVendidos + 1;
+                System.out.println("Necesitas introducir " + (cantidadDeDineroQueFalta) + " euros mas!");
+                        
+            }            
         }
         else {
-            System.out.println("Necesitas introducir " + (cantidadDeDineroQueFalta) + " euros mas!");
-                    
-        }            
+            System.out.println("Error: No es posible imprimir");
+            System.out.println("billetes debido a que la máquina");
+            System.out.println("se ha quedado sin billetes");
+        }
     }
     
     /**
